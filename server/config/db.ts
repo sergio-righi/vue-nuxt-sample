@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   production: {
     domain: "",
     username: "",
@@ -6,9 +6,9 @@ module.exports = {
     database: ""
   },
   dev: {
-    domain: "",
+    domain: "localhost",
     username: "",
     password: "",
-    database: ""
+    database: "vue-nuxt-sample"
   }
 };

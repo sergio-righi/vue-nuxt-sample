@@ -1,47 +1,47 @@
-const Todo = require("../model/todo");
+import { Todo } from "../model";
 
-exports.all = (req, res) => {
+const all = (_: any, res: any) => {
   try {
-    Todo.find({ deleted: false }, function (err, resp) {
+    Todo.find({ deleted: false }, (err: Error, data: any) => {
       if (err) throw err;
-      res.status(200).json(resp);
+      res.status(200).json(data);
     });
   } catch (err) {
     res.status(500).json(err);
   }
 };
 
-exports.find = (req, res) => {
+const find = (req: any, res: any) => {
   try {
-    Todo.findById(req.params.id, function (err, resp) {
+    Todo.findById(req.params.id, (err: Error, data: any) => {
       if (err) throw err;
-      res.status(200).json(resp);
+      res.status(200).json(data);
     });
   } catch (err) {
     res.status(500).json(err);
   }
 };
 
-exports.insert = (req, res) => {
+const insert = (req: any, res: any) => {
   try {
-    Todo.create(req.body, function (err, resp) {
+    Todo.create(req.body, (err: Error, data: any) => {
       if (err) throw err;
-      res.status(200).json(resp);
+      res.status(200).json(data);
     });
   } catch (err) {
     res.status(500).json(err);
   }
 };
 
-exports.update = (req, res) => {
+const update = (req: any, res: any) => {
   try {
     Todo.findByIdAndUpdate(
       req.params.id,
       req.body,
       { new: true },
-      function (err, resp) {
+      (err: Error, data: any) => {
         if (err) throw err;
-        res.status(200).json(resp);
+        res.status(200).json(data);
       }
     );
   } catch (err) {
@@ -49,7 +49,7 @@ exports.update = (req, res) => {
   }
 };
 
-exports.delete = (req, res) => {
+const remove = (req: any, res: any) => {
   try {
     Todo.findByIdAndUpdate(
       req.params.id,
@@ -57,9 +57,9 @@ exports.delete = (req, res) => {
         deleted: true,
         new: true,
       },
-      function (err, resp) {
+      (err: Error, data: any) => {
         if (err) throw err;
-        res.status(200).json(resp);
+        res.status(200).json(data);
       }
     );
   } catch (err) {
@@ -67,7 +67,7 @@ exports.delete = (req, res) => {
   }
 };
 
-exports.recover = (req, res) => {
+const recover = (req: any, res: any) => {
   try {
     Todo.findByIdAndUpdate(
       req.params.id,
@@ -75,12 +75,21 @@ exports.recover = (req, res) => {
         deleted: false,
         new: true,
       },
-      function (err, resp) {
+      (err: Error, data: any) => {
         if (err) throw err;
-        res.status(200).json(resp);
+        res.status(200).json(data);
       }
     );
   } catch (err) {
     res.status(500).json(err);
   }
 };
+
+export default {
+  all,
+  find,
+  insert,
+  update,
+  remove,
+  recover,
+}

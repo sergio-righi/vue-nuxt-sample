@@ -11,14 +11,14 @@ export const TodoRepository = ($axios: any, $service: any) => ({
     return response ? response.data.map((item: any) => new Todo(item)) : null;
   },
 
-  async insert(todo: Todo) {
-    const response = await $axios.post(`${controller}`, todo);
-    return response ? new Todo(response.data) : null;
-  },
-
   async find(id: string) {
     if (!id) return;
     const response = await $axios.get(`${controller}/${id}`);
+    return response ? new Todo(response.data) : null;
+  },
+
+  async insert(todo: Todo) {
+    const response = await $axios.post(`${controller}`, todo);
     return response ? new Todo(response.data) : null;
   },
 

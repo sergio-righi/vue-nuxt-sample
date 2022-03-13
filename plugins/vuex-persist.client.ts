@@ -1,7 +1,7 @@
-import VuexPersistence from "vuex-persist";
+import * as VuexPersistence from "vuex-persist";
 
 export default ({ store }: any) => {
   new VuexPersistence({
-    key: 'the-book-store',
+    key: 'vue-nuxt-sample',
   }).plugin(store);
 };

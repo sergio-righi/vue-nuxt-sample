@@ -1,5 +1,5 @@
-import { i18n } from "./utils";
-import { resolve } from "path";
+import { resolve } from 'path'
+import { i18n } from './utils'
 
 export default {
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
@@ -9,41 +9,38 @@ export default {
   head: {
     title: 'vue-nuxt-sample',
     htmlAttrs: {
-      lang: 'en'
+      lang: 'en',
     },
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { hid: 'description', name: 'description', content: '' },
-      { name: 'format-detection', content: 'telephone=no' }
+      { name: 'format-detection', content: 'telephone=no' },
     ],
-    link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
-    ]
+    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
-  css: [
-  ],
+  css: [],
 
-  pageTransition: "page",
+  pageTransition: 'page',
 
-  loading: { color: "white" },
+  loading: { color: 'white' },
 
   loadingIndicator: {
-    name: "circle",
-    color: "black",
-    background: "white",
+    name: 'circle',
+    color: 'black',
+    background: 'white',
   },
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
-    "~/plugins/axios",
-    "~/plugins/filter",
-    "~/plugins/service",
-    "~/plugins/resolve",
-    "~/plugins/repository",
-    { src: "~/plugins/vuex-persist", ssr: false },
+    '~/plugins/axios',
+    '~/plugins/filter',
+    '~/plugins/service',
+    '~/plugins/resolve',
+    '~/plugins/repository',
+    { src: '~/plugins/vuex-persist', ssr: false },
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -56,45 +53,42 @@ export default {
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
-  modules: [
-    "nuxt-i18n", "@nuxtjs/axios"
-  ],
+  modules: ['nuxt-i18n', '@nuxtjs/axios'],
 
   axios: {
     // proxy: true,
     progress: false,
-    baseUrl: process.env.BASE_URL || "http://localhost:4000/",
+    baseUrl: process.env.BASE_URL || 'http://localhost:4000/',
     headers: {
       common: {
         Authorization:
-          process.env.API_TOKEN || "D2GZvPTl8c5GAQX8ZyvOlq72Jnukl5Tu",
+          process.env.API_TOKEN || 'D2GZvPTl8c5GAQX8ZyvOlq72Jnukl5Tu',
       },
     },
   },
 
   alias: {
-    utils: resolve(__dirname, "./utils"),
+    utils: resolve(__dirname, './utils'),
   },
 
   i18n: {
     seo: true,
     lazy: true,
-    langDir: "~/locales/",
+    langDir: '~/locales/',
     parsePages: false,
     vueI18nLoader: true,
     locales: [
-      { code: "en-CA", iso: "en-CA", name: "English", file: "en-CA.json" },
+      { code: 'en-CA', iso: 'en-CA', name: 'English', file: 'en-CA.json' },
     ],
     vueI18n: i18n,
-    defaultLocale: "en-CA",
-    strategy: "prefix_and_default",
+    defaultLocale: 'en-CA',
+    strategy: 'prefix_and_default',
   },
 
   router: {
-    middleware: ["authentitcation"],
+    middleware: ['authentitcation'],
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
-  build: {
-  }
+  build: {},
 }
