@@ -11,23 +11,19 @@ export const TodoService = (store: any, i18n: any) => ({
   },
 
   insert(todo: Todo) {
-    store.dispatch("user/add", todo);
+    store.dispatch("todo/insert", todo);
   },
 
   update(props: Object) {
-    store.dispatch("user/put", props);
+    store.dispatch("todo/update", props);
   },
 
   delete(id: string) {
-    store.dispatch("user/delete", id);
+    store.dispatch("todo/delete", id);
   },
 
   clear() {
-    store.dispatch("user/clear");
-  },
-
-  reset() {
-    store.dispatch("user/reset");
+    store.dispatch("todo/clear");
   },
 
   /**
@@ -44,8 +40,8 @@ export const TodoService = (store: any, i18n: any) => ({
    * @returns 
    */
 
-  example() {
-    return store.getters["todo/example"];
+  todo() {
+    return store.getters["todo/todo"];
   },
 
 });
