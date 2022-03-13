@@ -1,6 +1,6 @@
 import { Todo } from "@/models";
 
-const controller = "/name-of-controller";
+const controller = "/todo";
 
 export const TodoRepository = ($axios: any, $service: any) => ({
 
@@ -12,8 +12,7 @@ export const TodoRepository = ($axios: any, $service: any) => ({
   },
 
   async insert(todo: Todo) {
-    $service.todo.update({ createdBy: this.id() });
-    const response = await $axios.post(`${controller}`, Todo);
+    const response = await $axios.post(`${controller}`, todo);
     return response ? new Todo(response.data) : null;
   },
 
