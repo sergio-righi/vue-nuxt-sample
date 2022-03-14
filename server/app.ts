@@ -1,45 +1,40 @@
-import express, { json, urlencoded } from 'express'
-import mongoose from 'mongoose'
-import cors from 'cors'
-
-import env from './config/db'
-import auth from './middleware/auth'
-import { TodoRoute } from './api/routes'
-
 class App {
-  public express: express.Application
 
-  constructor() {
-    this.express = express()
-    this.setDatabase()
-    this.setConfiguration()
-    this.setRoutes()
-    this.setMiddleware()
-  }
-
-  private setDatabase(): void {
+  static setDatabase() {
+    const env = require("./config/db.ts");
+    const mongoose = require("mongoose");
     const isDev = String(process.env.NODE_ENV).includes('dev')
     const connectionString = isDev
       ? `mongodb://${env.dev.domain}:27017/${env.dev.database}`
       : `mongodb://${env.production.username}:${env.production.password}@${env.production.domain}:27017/${env.production.database}`
-    mongoose.connect(connectionString)
+    mongoose.connect(connectionString, {
+      useCreateIndex: true,
+      useNewUrlParser: true,
+      useFindAndModify: true,
+      useUnifiedTopology: true
+    })
     const databaseConnection = mongoose.connection
     databaseConnection.on('error', console.error.bind(console, 'MongoDB Connection error'))
   }
 
-  private setConfiguration(): void {
-    this.express.use(cors())
-    this.express.use(json())
-    this.express.use(urlencoded({ extended: true }))
+  static setConfiguration(app, express) {
+    const cors = require("cors");
+
+    app.use(cors())
+    app.use(express.json())
+    app.use(express.urlencoded({ extended: true }))
   }
 
-  private setRoutes(): void {
-    this.express.use('/todos', TodoRoute)
+  static setRoutes(app) {
+    const todoRoute = require("./api/routes/todo.ts");
+
+    app.use('/todos', todoRoute)
   }
 
-  private setMiddleware(): void {
-    this.express.use(auth)
+  static setMiddleware(app) {
+    const auth = require("./middleware/auth.ts");
+    app.use(auth)
   }
 }
 
-export default new App().express
+module.exports = App

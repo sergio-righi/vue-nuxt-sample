@@ -1,11 +1,11 @@
-import { Schema, model } from 'mongoose';
+const mongoose = require('mongoose');
 
-interface ITodo {
-  name: string
-  deleted: boolean
-}
+// interface ITodo {
+//   name: string
+//   deleted: boolean
+// }
 
-const schema = new Schema<ITodo>(
+const schema = mongoose.Schema(
   {
     name: { type: String, required: true },
     deleted: { type: Boolean, required: true },
@@ -13,4 +13,4 @@ const schema = new Schema<ITodo>(
   { collection: "todos", timestamps: true }
 );
 
-export const Todo = model<ITodo>('Todo', schema);
+module.exports = mongoose.model('Todo', schema);

@@ -1,8 +1,8 @@
-import { Todo } from "../model";
+const Todo = require("../model/todo.ts");
 
-const all = (_: any, res: any) => {
+const all = (_, res) => {
   try {
-    Todo.find({ deleted: false }, (err: Error, data: any) => {
+    Todo.find({ deleted: false }, (err, data) => {
       if (err) throw err;
       res.status(200).json(data);
     });
@@ -11,9 +11,9 @@ const all = (_: any, res: any) => {
   }
 };
 
-const find = (req: any, res: any) => {
+const find = (req, res) => {
   try {
-    Todo.findById(req.params.id, (err: Error, data: any) => {
+    Todo.findById(req.params.id, (err, data) => {
       if (err) throw err;
       res.status(200).json(data);
     });
@@ -22,9 +22,9 @@ const find = (req: any, res: any) => {
   }
 };
 
-const insert = (req: any, res: any) => {
+const insert = (req, res) => {
   try {
-    Todo.create(req.body, (err: Error, data: any) => {
+    Todo.create(req.body, (err, data) => {
       if (err) throw err;
       res.status(200).json(data);
     });
@@ -33,13 +33,12 @@ const insert = (req: any, res: any) => {
   }
 };
 
-const update = (req: any, res: any) => {
+const update = (req, res) => {
   try {
     Todo.findByIdAndUpdate(
       req.params.id,
       req.body,
-      { new: true },
-      (err: Error, data: any) => {
+      (err, data) => {
         if (err) throw err;
         res.status(200).json(data);
       }
@@ -49,7 +48,7 @@ const update = (req: any, res: any) => {
   }
 };
 
-const remove = (req: any, res: any) => {
+const remove = (req, res) => {
   try {
     Todo.findByIdAndUpdate(
       req.params.id,
@@ -57,7 +56,7 @@ const remove = (req: any, res: any) => {
         deleted: true,
         new: true,
       },
-      (err: Error, data: any) => {
+      (err, data) => {
         if (err) throw err;
         res.status(200).json(data);
       }
@@ -67,7 +66,7 @@ const remove = (req: any, res: any) => {
   }
 };
 
-const recover = (req: any, res: any) => {
+const recover = (req, res) => {
   try {
     Todo.findByIdAndUpdate(
       req.params.id,
@@ -75,7 +74,7 @@ const recover = (req: any, res: any) => {
         deleted: false,
         new: true,
       },
-      (err: Error, data: any) => {
+      (err, data) => {
         if (err) throw err;
         res.status(200).json(data);
       }
@@ -85,7 +84,7 @@ const recover = (req: any, res: any) => {
   }
 };
 
-export default {
+module.exports = {
   all,
   find,
   insert,
