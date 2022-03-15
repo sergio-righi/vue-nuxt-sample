@@ -1,8 +1,24 @@
-class App {
+import mongoose from "mongoose";
+import express from 'express';
+import cors from 'cors';
 
-  static setDatabase() {
-    const env = require("./config/db.ts");
-    const mongoose = require("mongoose");
+import env from "./config/db";
+import auth from "./middleware/auth";
+
+import { TodoRoute } from "./api/routes";
+
+class App {
+  public express: express.Application;
+
+  constructor() {
+    this.express = express();
+    this.setDatabase();
+    this.setConfiguration();
+    this.setMiddleware();
+    this.setRoutes();
+  }
+
+  setDatabase() {
     const isDev = String(process.env.NODE_ENV).includes('dev')
     const connectionString = isDev
       ? `mongodb://${env.dev.domain}:27017/${env.dev.database}`
@@ -17,24 +33,19 @@ class App {
     databaseConnection.on('error', console.error.bind(console, 'MongoDB Connection error'))
   }
 
-  static setConfiguration(app, express) {
-    const cors = require("cors");
-
-    app.use(cors())
-    app.use(express.json())
-    app.use(express.urlencoded({ extended: true }))
+  setConfiguration() {
+    this.express.use(cors())
+    this.express.use(express.json())
+    this.express.use(express.urlencoded({ extended: true }))
   }
 
-  static setRoutes(app) {
-    const todoRoute = require("./api/routes/todo.ts");
-
-    app.use('/todos', todoRoute)
+  setRoutes() {
+    this.express.use('/', TodoRoute)
   }
 
-  static setMiddleware(app) {
-    const auth = require("./middleware/auth.ts");
-    app.use(auth)
+  setMiddleware() {
+    this.express.use(auth)
   }
 }
 
-module.exports = App
+export default new App().express

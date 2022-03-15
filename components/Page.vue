@@ -28,25 +28,25 @@ export default {
   },
   computed: {
     hasHeader() {
-      return !!this.$slots.header || this.hasAction;
+      return !!this.$slots.header || this.hasAction
     },
     hasAction() {
-      return !!this.$slots.action;
+      return !!this.$slots.action
     },
     hasFilter() {
-      return !!this.$slots.filter;
+      return !!this.$slots.filter
     },
     hasContent() {
-      return !!this.$slots.content;
+      return !!this.$slots.content
     },
     hasFooter() {
-      return !!this.$slots.footer;
+      return !!this.$slots.footer
     },
     hasTitle() {
-      return !!this.title;
+      return !!this.title
     },
   },
-};
+}
 </script>
 
 <!--<style lang="scss">

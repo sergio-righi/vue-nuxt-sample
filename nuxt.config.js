@@ -40,7 +40,7 @@ export default {
     '~/plugins/service',
     '~/plugins/resolve',
     '~/plugins/repository',
-    { src: '~/plugins/vuex-persist', ssr: false },
+    // "~/plugins/vuex-persist.client",
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -69,6 +69,7 @@ export default {
 
   alias: {
     utils: resolve(__dirname, './utils'),
+    components: resolve(__dirname, './components'),
   },
 
   i18n: {

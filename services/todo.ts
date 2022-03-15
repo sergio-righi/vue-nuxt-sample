@@ -1,6 +1,6 @@
 import { Todo } from "@/models";
 
-export const TodoService = (store: any, i18n: any) => ({
+export const TodoService = (store: any, _18n: any) => ({
 
   all() {
     store.dispatch('todo/all');

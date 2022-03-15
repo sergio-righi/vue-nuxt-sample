@@ -1,12 +1,13 @@
-const server = require("express");
-const router = server.Router();
-const todoController = require("../controller/todo.ts");
+import express from "express";
+import { TodoController } from "../controller";
 
-router.get("/", todoController.all);
-router.get("/:id", todoController.find);
-router.post("/", todoController.insert);
-router.put("/:id", todoController.update);
-router.put("/delete/:id", todoController.remove);
-router.put("/recover/:id", todoController.recover);
+const router = express.Router();
 
-module.exports = router;
+router.get("/", TodoController.all);
+router.get("/:id", TodoController.find);
+router.post("/", TodoController.insert);
+router.put("/:id", TodoController.update);
+router.put("/delete/:id", TodoController.remove);
+router.put("/recover/:id", TodoController.recover);
+
+export default router;

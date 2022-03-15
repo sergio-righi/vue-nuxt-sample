@@ -1,6 +1,6 @@
 const dev = process.env.NODE_ENV !== "production";
 
-module.exports = (req, res, next) => {
+export default (req: any, res: any, next: any) => {
   try {
     const token = req.headers.authorization;
     const secretKey =

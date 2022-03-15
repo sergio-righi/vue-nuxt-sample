@@ -1,11 +1,11 @@
 <template>
-  <component :is="errorPage" :error="error" :bg="background" />
+  <component :is="errorPage" :error="error" />
 </template>
 
 <script>
-import { Error401, Error404, Error500 } from "@/components/error";
+import { Error401, Error404, Error500 } from '@/components/error'
 export default {
-  layout: "empty",
+  layout: 'empty',
   components: {
     Error401,
     Error404,
@@ -21,12 +21,12 @@ export default {
     errorPage() {
       switch (this.error.statusCode) {
         case 401:
-          return Error401;
+          return Error401
         case 404:
-          return Error404;
+          return Error404
       }
-      return Error500;
-    }
+      return Error500
+    },
   },
-};
+}
 </script>

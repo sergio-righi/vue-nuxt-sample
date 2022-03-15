@@ -4,12 +4,12 @@
 
 <script>
 export default {
-  name: "error-401",
+  name: 'Error401',
   props: {
     error: {
       type: Object,
-      default: () => {}
+      default: () => {},
     },
-  }
-};
+  },
+}
 </script>

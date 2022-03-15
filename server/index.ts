@@ -1,13 +1,7 @@
 
-const express = require("express");
-const app = express();
-const config = require('./app.ts')
-const PORT = process.env.PORT || 4000
+import app from './app';
 
-config.setDatabase()
-config.setConfiguration(app, express)
-config.setRoutes(app)
-config.setMiddleware(app)
+const PORT = process.env.PORT || 4000
 
 app.listen(PORT, () => {
   console.log(`App is running on ${PORT}`)
