@@ -29,7 +29,7 @@ const mutations: MutationTree<RootState> = {
 
   insert: (state: IState, todo: Todo) => {
     state.todo = todo;
-    // state.todos.push(todo); (optional)
+    state.todos.push(todo);
   },
 
   delete: (state: IState) => {
@@ -39,6 +39,10 @@ const mutations: MutationTree<RootState> = {
 
   recover: (state: IState) => {
     state.todos.splice(state.index, 0, state.todo);
+  },
+
+  set: (state: IState, id: string) => {
+    state.todo = state.todos.find(item => item.id === id) as Todo
   },
 
   clear: (state: IState) => {
@@ -81,14 +85,16 @@ const actions: ActionTree<RootState, RootState> = {
     });
   },
 
-  delete({ commit, state }: any) {
-    return this.$repository.todo.delete(state.todo.id).then((response: any) => {
+  delete({ commit }: any, id: string) {
+    commit('set', id)
+    return this.$repository.todo.delete(id).then((response: any) => {
       commit("delete", response);
     });
   },
 
-  recover({ commit, state }: any) {
-    return this.$repository.todo.recover(state.todo.id).then((response: any) => {
+  recover({ commit }: any, id: string) {
+    commit('set', id)
+    return this.$repository.todo.recover(id).then((response: any) => {
       commit("recover", response);
     });
   },

@@ -1,11 +1,11 @@
-import mongoose, { Schema } from 'mongoose';
+import mongoose from 'mongoose';
 
 interface ITodo {
   name: string
   deleted: boolean
 }
 
-const schema = new Schema<ITodo>(
+const schema = new mongoose.Schema<ITodo>(
   {
     name: { type: String, required: true },
     deleted: { type: Boolean, required: true },

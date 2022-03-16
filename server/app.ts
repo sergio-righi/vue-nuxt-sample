@@ -40,7 +40,7 @@ class App {
   }
 
   setRoutes() {
-    this.express.use('/', TodoRoute)
+    this.express.use('/todo', TodoRoute)
   }
 
   setMiddleware() {
