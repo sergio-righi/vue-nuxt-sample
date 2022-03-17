@@ -1,3 +1,9 @@
 {
-  "hello_world": "Hello World"
+  "action": {
+    "delete": "Delete",
+    "insert": "Insert",
+    "recover": "Recover",
+    "save": "Save",
+    "update": "Update"
+  }
 }

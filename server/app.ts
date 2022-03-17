@@ -26,7 +26,7 @@ class App {
     mongoose.connect(connectionString, {
       useCreateIndex: true,
       useNewUrlParser: true,
-      useFindAndModify: true,
+      useFindAndModify: false,
       useUnifiedTopology: true
     })
     const databaseConnection = mongoose.connection

@@ -4,13 +4,11 @@ import { Todo } from "@/models";
 import { helpers } from "@/utils";
 
 interface IState {
-  index: number
   todos: Todo[]
   todo: Todo
 }
 
 const state = (): IState => ({
-  index: -1 as number,
   todos: [] as Todo[],
   todo: new Todo() as Todo
 });
@@ -19,40 +17,68 @@ export type RootState = ReturnType<typeof state>
 
 const mutations: MutationTree<RootState> = {
 
+  /**
+   * it gets all (not deleted) records on the collection
+   */
+
   all: (state: IState, todos: Todo[]) => {
     state.todos = todos;
   },
 
+  /**
+   * it performs updates on the stored list (not refresh)
+   */
+
   update: (state: IState, todo: Todo) => {
+    // if state already loaded the next line is not necessary
+    state.todo = state.todos.find(item => item.id === todo.id) as Todo
     state.todo = helpers.deepMerge(state.todo, todo);
   },
+
+  /**
+   * it inserts the new item into the stored list
+   */
 
   insert: (state: IState, todo: Todo) => {
     state.todo = todo;
     state.todos.push(todo);
   },
 
+  /**
+   * it updates the status of an item on the stored list (deleted)
+   */
+
   delete: (state: IState) => {
-    state.index = state.todos.findIndex(x => x.id === state.todo.id);
-    state.todos.splice(state.index, 1);
+    state.todo.deleted = true
   },
+
+  /**
+   * it updates the status of an item on the stored list (not deleted)
+   */
 
   recover: (state: IState) => {
-    state.todos.splice(state.index, 0, state.todo);
+    state.todo.deleted = false
   },
 
-  set: (state: IState, id: string) => {
+  /**
+   * it selects an item from the list
+   */
+
+  select: (state: IState, id: string) => {
     state.todo = state.todos.find(item => item.id === id) as Todo
   },
 
-  clear: (state: IState) => {
-    state.index = -1;
+  /**
+   * it unselects an item from the list
+   */
+
+  unselect: (state: IState) => {
     state.todo = new Todo();
   }
 };
 
 const getters: GetterTree<RootState, RootState> = {
-  todos: (state: IState) => state.todos.filter(x => !x.deleted),
+  todos: (state: IState) => state.todos,
   todo: (state: IState) => state.todo
 };
 
@@ -77,32 +103,38 @@ const actions: ActionTree<RootState, RootState> = {
     });
   },
 
-  update({ commit, state }: any) {
-    const { id } = state.todo;
-    delete state.todo.id;
-    return this.$repository.todo.update(id, state.todo).then((response: any) => {
+  update({ commit }: any, { id, props }) {
+    // it must be uncommented if willing to use state to update
+    // const { id } = state.todo;
+    // delete state.todo.id;
+    return this.$repository.todo.update(id, props).then((response: any) => {
       commit("update", response);
     });
   },
 
   delete({ commit }: any, id: string) {
-    commit('set', id)
     return this.$repository.todo.delete(id).then((response: any) => {
       commit("delete", response);
     });
   },
 
   recover({ commit }: any, id: string) {
-    commit('set', id)
     return this.$repository.todo.recover(id).then((response: any) => {
       commit("recover", response);
     });
   },
 
-  clear({ commit }: any) {
-    commit("clear");
-  }
+  set({ commit }: any, props: object) {
+    commit('update', props)
+  },
 
+  select({ commit }: any, id: string) {
+    commit('select', id)
+  },
+
+  unselect({ commit }: any) {
+    commit("unselect");
+  }
 };
 
 export default {

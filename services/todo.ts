@@ -14,16 +14,24 @@ export const TodoService = (store: any, _18n: any) => ({
     store.dispatch("todo/insert", todo);
   },
 
-  update(props: Object) {
-    store.dispatch("todo/update", props);
+  update(id: string, props: object) {
+    store.dispatch("todo/update", { id, props });
   },
 
   delete(id: string) {
     store.dispatch("todo/delete", id);
   },
 
-  clear() {
-    store.dispatch("todo/clear");
+  recover(id: string) {
+    store.dispatch("todo/recover", id);
+  },
+
+  select(id: string) {
+    store.dispatch("todo/select", id);
+  },
+
+  unselect() {
+    store.dispatch("todo/unselect");
   },
 
   /**
