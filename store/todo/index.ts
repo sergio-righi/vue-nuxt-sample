@@ -22,17 +22,15 @@ const mutations: MutationTree<RootState> = {
    */
 
   all: (state: IState, todos: Todo[]) => {
-    state.todos = todos;
+    state.todos = todos
   },
 
   /**
-   * it performs updates on the stored list (not refresh)
+   * it attributes the searched item to the stored value
    */
 
-  update: (state: IState, todo: Todo) => {
-    // if state already loaded the next line is not necessary
-    state.todo = state.todos.find(item => item.id === todo.id) as Todo
-    state.todo = helpers.deepMerge(state.todo, todo);
+  find: (state: IState, todo: Todo) => {
+    state.todo = todo
   },
 
   /**
@@ -40,8 +38,16 @@ const mutations: MutationTree<RootState> = {
    */
 
   insert: (state: IState, todo: Todo) => {
-    state.todo = todo;
-    state.todos.push(todo);
+    state.todo = todo
+    state.todos.push(todo)
+  },
+
+  /**
+   * it modified the stored value with the updated ones
+   */
+
+  set: (state: IState, todo: Todo) => {
+    state.todo = helpers.deepMerge(state.todo, todo);
   },
 
   /**
@@ -72,8 +78,8 @@ const mutations: MutationTree<RootState> = {
    * it unselects an item from the list
    */
 
-  unselect: (state: IState) => {
-    state.todo = new Todo();
+  clear: (state: IState) => {
+    state.todo = new Todo()
   }
 };
 
@@ -103,37 +109,30 @@ const actions: ActionTree<RootState, RootState> = {
     });
   },
 
-  update({ commit }: any, { id, props }) {
-    // it must be uncommented if willing to use state to update
-    // const { id } = state.todo;
-    // delete state.todo.id;
-    return this.$repository.todo.update(id, props).then((response: any) => {
-      commit("update", response);
+  update({ commit, state }: any) {
+    const { id } = state.todo;
+    delete state.todo.id;
+    return this.$repository.todo.update(id, state.todo).then((response: any) => {
+      commit("set", response);
     });
   },
 
   delete({ commit }: any, id: string) {
+    commit('select', id);
     return this.$repository.todo.delete(id).then((response: any) => {
       commit("delete", response);
     });
   },
 
   recover({ commit }: any, id: string) {
+    commit('select', id);
     return this.$repository.todo.recover(id).then((response: any) => {
       commit("recover", response);
     });
   },
 
-  set({ commit }: any, props: object) {
-    commit('update', props)
-  },
-
-  select({ commit }: any, id: string) {
-    commit('select', id)
-  },
-
-  unselect({ commit }: any) {
-    commit("unselect");
+  clear({ commit }: any) {
+    commit("clear");
   }
 };
 

@@ -11,20 +11,14 @@
         <tbody>
           <tr v-for="item in todos" :key="item.id">
             <td>
-              <input v-if="updating === item.id" v-model="name" />
-              <span v-else :class="{ 'line-through': item.deleted }">
+              <span :class="{ 'line-through': item.deleted }">
                 {{ item.name }}
               </span>
             </td>
             <td>
-              <template v-if="!item.deleted">
-                <button v-if="updating === item.id" @click="onUpdate({})">
-                  {{ $t('action.save') }}
-                </button>
-                <button v-else @click="onUpdate(item)">
-                  {{ $t('action.update') }}
-                </button>
-              </template>
+              <a :href="$resolve.todo(item.id)">
+                {{ $t('action.update') }}
+              </a>
             </td>
             <td>
               <button v-if="item.deleted" @click="onRecover(item.id)">
@@ -37,7 +31,7 @@
           </tr>
         </tbody>
       </table>
-      <NoRecord v-else />
+      <NoRecord v-else many />
       <br />
       <button @click="onInsert">{{ $t('action.insert') }}</button>
     </template>
@@ -46,23 +40,12 @@
 
 <script>
 import { mapGetters } from 'vuex'
-
 import { Todo } from '@/models'
 import { NoRecord, Page } from '@/components'
 export default {
   components: {
     Page,
     NoRecord,
-  },
-  // the data property must be declared like this in order to become accessible from fetch
-  // data: () => ({
-  //   data: [],
-  // }),
-  data() {
-    return {
-      name: null,
-      updating: null,
-    }
   },
   async fetch() {
     const { $service, error } = this.$nuxt.context
@@ -88,21 +71,10 @@ export default {
       await this.$service.todo.insert(todo)
     },
     async onDelete(id) {
-      await this.$service.todo.select(id)
       await this.$service.todo.delete(id)
     },
     async onRecover(id) {
       await this.$service.todo.recover(id)
-    },
-    async onUpdate({ id = null, name = null }) {
-      if (id === null) {
-        await this.$service.todo.update(this.updating, { name: this.name })
-        await this.$service.todo.unselect()
-      } else {
-        await this.$service.todo.select(id)
-      }
-      this.name = name
-      this.updating = id
     },
   },
 }

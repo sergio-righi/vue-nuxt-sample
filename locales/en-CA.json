@@ -1,9 +1,22 @@
 {
   "action": {
+    "return": "Return",
     "delete": "Delete",
     "insert": "Insert",
     "recover": "Recover",
     "save": "Save",
     "update": "Update"
+  },
+  "message": {
+    "feedback": {
+      "fetch": {
+        "pending": "Loading...",
+        "no_record": "There is no record to display :( | There are no records to display :("
+      },
+      "form": {
+        "success": "The record has been saved successfully.",
+        "error": "Something went wrong."
+      }
+    }
   }
 }

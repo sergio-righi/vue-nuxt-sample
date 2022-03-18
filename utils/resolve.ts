@@ -1,12 +1,12 @@
 
 const controller = {
-  controllerName: '/controller-name',
+  todo: '/',
 }
 
 const Resolve = (localePath: Function) => ({
 
-  controllerName: (...args: any[]) => {
-    return localePath({ path: controller.controllerName + args.join('/') });
+  todo: (...args: any[]) => {
+    return localePath({ path: controller.todo + args.join('/') });
   },
 
   static: {

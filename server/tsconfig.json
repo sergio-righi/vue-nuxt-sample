@@ -6,6 +6,24 @@
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    "baseUrl": ".",
+    "paths": {
+      "config": [
+        "./config"
+      ],
+      "controllers": [
+        "./api/controllers"
+      ],
+      "middleware": [
+        "./middleware"
+      ],
+      "models": [
+        "./api/models"
+      ],
+      "routes": [
+        "./api/routes"
+      ]
+    }
   },
 }

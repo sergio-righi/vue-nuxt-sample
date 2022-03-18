@@ -2,9 +2,8 @@ import mongoose from "mongoose";
 import express from 'express';
 import cors from 'cors';
 
-import env from "./config/db";
-import auth from "./middleware/auth";
-
+import { env } from "./config";
+import { auth } from "./middleware";
 import { TodoRoute } from "./api/routes";
 
 class App {
