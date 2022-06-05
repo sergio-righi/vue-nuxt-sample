@@ -9,6 +9,6 @@ export default {
     domain: "localhost",
     username: "",
     password: "",
-    database: "vue-nuxt-sample"
+    database: "management"
   }
 };

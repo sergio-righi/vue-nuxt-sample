@@ -2,9 +2,8 @@ import mongoose from "mongoose";
 import express from 'express';
 import cors from 'cors';
 
-import { env } from "./config";
-import { auth } from "./middleware";
-import { TodoRoute } from "./api/routes";
+import { AuthRoute, MailRoute, TokenRoute, UserRoute } from "@server/routes";
+import { db } from "@server/config";
 
 class App {
   public express: express.Application;
@@ -20,8 +19,8 @@ class App {
   setDatabase() {
     const isDev = String(process.env.NODE_ENV).includes('dev')
     const connectionString = isDev
-      ? `mongodb://${env.dev.domain}:27017/${env.dev.database}`
-      : `mongodb://${env.production.username}:${env.production.password}@${env.production.domain}:27017/${env.production.database}`
+      ? `mongodb://${db.dev.domain}:27017/${db.dev.database}`
+      : `mongodb://${db.production.username}:${db.production.password}@${db.production.domain}:27017/${db.production.database}`
     mongoose.connect(connectionString, {
       useCreateIndex: true,
       useNewUrlParser: true,
@@ -39,11 +38,14 @@ class App {
   }
 
   setRoutes() {
-    this.express.use('/todo', TodoRoute)
+    this.express.use('/auth', AuthRoute)
+    this.express.use('/mails', MailRoute)
+    this.express.use('/tokens', TokenRoute)
+    this.express.use('/users', UserRoute)
   }
 
   setMiddleware() {
-    this.express.use(auth)
+    // this.express.use(jwt)
   }
 }
 

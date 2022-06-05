@@ -1,12 +1,18 @@
 <template>
-  <p v-if="many">{{ $tc('message.feedback.fetch.no_record', 2) }}</p>
-  <p v-else>{{ $tc('message.feedback.fetch.no_record', 1) }}</p>
+  <div class="no-record-container">
+    <div class="no-record-icon">
+      <gv-emoji value="expressionless" />
+    </div>
+    <div class="no-record-description">
+      <p>{{ $t('message.feedback.fetch.no_record.title') }}</p>
+      <p>{{ $t('message.feedback.fetch.no_record.subtitle') }}</p>
+    </div>
+  </div>
 </template>
 
-<script>
-export default {
-  props: {
-    many: Boolean,
-  },
-}
+<script lang="ts">
+import { Component, Vue } from 'vue-property-decorator'
+
+@Component
+export default class NoRecord extends Vue {}
 </script>

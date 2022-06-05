@@ -1,6 +1,6 @@
 import en from "../locales/en-CA.json";
 
-export const i18n = {
+export default {
   locale: "en-CA",
   fallbackLocale: "en-CA",
   messages: { en },
