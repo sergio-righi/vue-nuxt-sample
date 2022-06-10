@@ -33,10 +33,12 @@ const UserSchema: Schema = new Schema(
   { collection: "users", timestamps: true }
 );
 
-export class UserModel extends BaseModel {
+class UserModel extends BaseModel {
   constructor() {
     super(
       mongoose.model('User', UserSchema)
     )
   }
 }
+
+export default new UserModel();

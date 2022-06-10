@@ -24,10 +24,12 @@ const TokenSchema: Schema = new Schema(
   { collection: "tokens", timestamps: true }
 );
 
-export class TokenModel extends BaseModel {
+class TokenModel extends BaseModel {
   constructor() {
     super(
       mongoose.model('Token', TokenSchema)
     )
   }
 }
+
+export default new TokenModel();

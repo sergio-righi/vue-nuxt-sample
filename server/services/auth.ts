@@ -2,7 +2,6 @@ import mongoose from "mongoose";
 import auth from 'jsonwebtoken';
 import * as utils from "@server/utils";
 import { UserModel } from "@server/models";
-import { jwt } from "@server/config";
 import { ServiceType } from "@server/interfaces";
 
 class AuthService {
@@ -17,7 +16,7 @@ class AuthService {
   };
 
   constructor() {
-    this.model = new UserModel().model;
+    this.model = UserModel.model;
   }
 
   /**
@@ -38,8 +37,8 @@ class AuthService {
       if (user) {
         this.currentUser = user;
 
-        const accessToken = auth.sign({ email: this.currentUser.email }, jwt.access, this.accessOptions);
-        const refreshToken = auth.sign({ email: this.currentUser.email }, jwt.refresh, this.refreshOptions);
+        const accessToken = auth.sign({ email: this.currentUser.email }, String(utils.env.JWT_ACCESS), this.accessOptions);
+        const refreshToken = auth.sign({ email: this.currentUser.email }, String(utils.env.JWT_REFRESH), this.refreshOptions);
 
         return { status: 200, data: { accessToken, refreshToken } } as ServiceType
       } else {
@@ -57,15 +56,11 @@ class AuthService {
    */
 
   me(): ServiceType {
+    delete this.currentUser.username
+    delete this.currentUser.password
     return this.currentUser ? {
       status: 200, data: {
-        user: {
-          id: this.currentUser._id,
-          name: this.currentUser.name,
-          email: this.currentUser.email,
-          roles: this.currentUser.roles,
-          validated: this.currentUser.validated,
-        },
+        user: this.currentUser,
       }
     } as ServiceType : { status: 401 } as ServiceType
   };
@@ -83,7 +78,7 @@ class AuthService {
       if (email) {
         const isValid: boolean = utils.jwt(email, token);
         if (isValid) {
-          const accessToken = auth.sign({ email }, jwt.access, this.accessOptions);
+          const accessToken = auth.sign({ email }, String(utils.env.JWT_ACCESS), this.accessOptions);
           return { status: 200, data: { accessToken } } as ServiceType
         }
       }

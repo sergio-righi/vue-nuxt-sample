@@ -10,9 +10,10 @@
   "keywords": [],
   "dependencies": {
     "cors": "latest",
+    "dotenv": "^16.0.1",
     "express": "latest",
     "fs": "^0.0.1-security",
-    "googleapis": "^100.0.0",
+    "google-auth-library": "^8.0.2",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "latest",
     "nodemailer": "^6.7.5"

@@ -19,37 +19,32 @@
     "allowSyntheticDefaultImports": true,
     "baseUrl": ".",
     "paths": {
-      "~/*": [
+      "~server/*": [
         "./*"
       ],
-      "@/*": [
+      "@server/*": [
         "./*"
       ]
     },
     "types": [
-      "@nuxt/types",
       "@types/node",
-      "@nuxtjs/auth-next"
+      "@types/cors",
+      "@types/express",
+      "@types/mongoose",
+      "@types/jsonwebtoken",
+      "@types/nodemailer"
     ]
   },
   "include": [
-    "**/*.ts",
-    "**/*.vue",
-    "types/shims-global.d.ts",
-    "types/shims-module.d.ts"
+    "**/*.ts"
   ],
   "exclude": [
     "node_modules",
-    ".nuxt",
-    "server/",
     "dist"
   ],
   "ts-node": {
     "require": [
       "tsconfig-paths/register"
     ]
-  },
-  "vueCompilerOptions": {
-    "experimentalDisableTemplateSupport": true
   }
 }

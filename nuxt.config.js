@@ -5,6 +5,11 @@ export default {
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
   ssr: false,
 
+  env: {
+    website: process.env.WEBSITE || 'http://localhost:3000',
+    baseUrl: process.env.BASE_URL || 'http://localhost:4000/',
+  },
+
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     title: 'vue-nuxt-sample',

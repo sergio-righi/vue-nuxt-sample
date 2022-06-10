@@ -2,8 +2,8 @@ import mongoose from "mongoose";
 import express from 'express';
 import cors from 'cors';
 
+import { env } from '@server/utils';
 import { AuthRoute, MailRoute, TokenRoute, UserRoute } from "@server/routes";
-import { db } from "@server/config";
 
 class App {
   public express: express.Application;
@@ -12,16 +12,11 @@ class App {
     this.express = express();
     this.setDatabase();
     this.setConfiguration();
-    this.setMiddleware();
     this.setRoutes();
   }
 
   setDatabase() {
-    const isDev = String(process.env.NODE_ENV).includes('dev')
-    const connectionString = isDev
-      ? `mongodb://${db.dev.domain}:27017/${db.dev.database}`
-      : `mongodb://${db.production.username}:${db.production.password}@${db.production.domain}:27017/${db.production.database}`
-    mongoose.connect(connectionString, {
+    mongoose.connect(String(env.MONGODB_URI), {
       useCreateIndex: true,
       useNewUrlParser: true,
       useFindAndModify: false,
@@ -33,7 +28,7 @@ class App {
 
   setConfiguration() {
     this.express.use(cors())
-    this.express.use(express.json())
+    this.express.use(express.json({ limit: "10mb" }))
     this.express.use(express.urlencoded({ extended: true }))
   }
 
@@ -42,10 +37,6 @@ class App {
     this.express.use('/mails', MailRoute)
     this.express.use('/tokens', TokenRoute)
     this.express.use('/users', UserRoute)
-  }
-
-  setMiddleware() {
-    // this.express.use(jwt)
   }
 }
 

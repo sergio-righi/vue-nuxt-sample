@@ -7,7 +7,7 @@ class MailService {
   private readonly $auth: any
   private readonly repository: any
 
-  constructor(context: any) {
+  constructor(context: Context) {
     this.i18n = context.i18n;
     this.$auth = context.$auth;
     this.repository = new MailRepository(context);
@@ -46,7 +46,7 @@ class MailService {
         header: this.i18n.t('mail.forget_password.header'),
         subheader: this.i18n.t('mail.forget_password.subheader'),
         button: this.i18n.t('mail.forget_password.button'),
-        href: `http://localhost:3000/forget_password?token=${token}`,
+        href: `${process.env.website}/forget_password?token=${token}`,
         description: this.i18n.t('mail.forget_password.description'),
       },
     };

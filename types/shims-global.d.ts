@@ -5,11 +5,6 @@ declare module 'vue/types/vue' {
     $t: any
     $tc: any
     $i18n: any
-  }
-}
-
-declare module 'vue/types/vue' {
-  interface Vue {
     $resolve: any
     $service: any
   }
@@ -20,7 +15,9 @@ declare module '@nuxt/types' {
     $resolve: any
     $service: any
   }
+
   interface Context {
+    i18n: any
     $resolve: any
     $service: any
   }
