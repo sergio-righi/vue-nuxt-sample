@@ -3,8 +3,9 @@ import express from 'express'
 import mongoose from 'mongoose'
 import compression from 'compression'
 
-import { env } from './utils'
-import { UserRoute } from './routes'
+import { env } from '@/utils'
+import { UserRoute } from '@/routes'
+
 class App {
   public express: any
 
