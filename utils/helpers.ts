@@ -143,6 +143,18 @@ function createInstance<T>(type: new (...constructorArgs: any[]) => T, ...args: 
   return new type(...args);
 }
 
+/**
+ * it runs recursively till the string is converted to JSON object
+ * @param json 
+ * @returns 
+ */
+
+function toJSON(json: string): object {
+  let parsed = JSON.parse(json);
+  if (typeof parsed === 'string') parsed = toJSON(parsed);
+  return parsed;
+}
+
 export default {
   objectId,
   deepMerge,
@@ -150,6 +162,7 @@ export default {
   fromUTC,
   timestamp,
   toUTC,
+  toJSON,
   toDropdownList,
   toDictionary,
   createInstance,

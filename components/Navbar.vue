@@ -34,20 +34,23 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import { SessionType } from '@/interfaces'
 
 @Component
 export default class Navbar extends Vue {
   get letter(): string {
-    if (this.$auth.loggedIn && 'user' in this.$auth) {
-      const user: any = this.$auth.user ?? ({} as SessionType)
-      return 'name' in user ? user.name?.slice(0, 1) : ''
+    if (this.$service.session.isAuthenticated()) {
+      const user: any = this.$service.session.user()
+      return user.name?.slice(0, 1)
     }
     return ''
   }
 
+  signIn() {
+    window.location.href = this.$resolve.login(window.location.href)
+  }
+
   signOut() {
-    this.$service.session.logout()
+    window.location.href = this.$resolve.logout(window.location.href)
   }
 
   isActive(url: string): boolean {

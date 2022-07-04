@@ -1,19 +1,26 @@
 <template>
-  <p>Customized 401 error page</p>
+  <div class="error-container" :class="bg">
+    <div class="error-content">
+      <div class="error-code">400</div>
+      <div class="error-message">
+        {{ $t('page.error.400') }}
+      </div>
+    </div>
+  </div>
 </template>
 
-<script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
-
-const Props = Vue.extend({
+<script>
+export default {
+  name: 'error400',
   props: {
     error: {
       type: Object,
       default: () => {},
     },
+    bg: {
+      type: String,
+      required: true,
+    },
   },
-})
-
-@Component
-export default class Error401 extends Props {}
+}
 </script>

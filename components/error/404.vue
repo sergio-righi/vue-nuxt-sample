@@ -1,19 +1,26 @@
 <template>
-  <p>Customized 404 error page</p>
+  <div class="error-container" :class="bg">
+    <div class="error-content">
+      <div class="error-code">404</div>
+      <div class="error-message">
+        {{ $t('page.error.404') }}
+      </div>
+    </div>
+  </div>
 </template>
 
-<script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
-
-const Props = Vue.extend({
+<script>
+export default {
+  name: 'error404',
   props: {
     error: {
       type: Object,
       default: () => {},
     },
+    bg: {
+      type: String,
+      required: true,
+    },
   },
-})
-
-@Component
-export default class Error404 extends Props {}
+}
 </script>

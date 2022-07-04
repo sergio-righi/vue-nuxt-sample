@@ -1,42 +1,37 @@
-import { Context } from '@nuxt/types'
+import Cookies from 'js-cookie'
+import { helpers } from '@/utils'
+import { SessionType } from '@/interfaces'
 
-import { crypto } from "@/utils";
+import { Context } from '@nuxt/types'
 
 class SessionService {
   private readonly store: any
-  private readonly $auth: any
+  private readonly $config: any
 
   constructor(context: Context) {
-    this.store = context.store;
-    this.$auth = context.$auth;
+    this.store = context.store
+    this.$config = context.$config
   }
 
   feedback(message: string, error: boolean = false) {
-    this.store.dispatch("session/feedback", { message, error });
+    this.store.dispatch('session/feedback', { message, error })
   }
 
-  async login(username: string, password: string, encrypt: boolean = true) {
-    password = encrypt ? crypto.encrypt(password) : password;
-    await this.$auth.loginWith('local', {
-      data: {
-        username,
-        password
-      },
-    })
+  user(): any {
+    const sessionCookie: any = helpers.toJSON(Cookies.get(this.$config.cookieKey))
+    return sessionCookie ? sessionCookie.user : {}
   }
 
-  async logout() {
-    await this.$auth.logout();
+  isAuthenticated(): boolean {
+    return this.user() !== null
   }
 
-  async fetch() {
-    const user = { ...this.$auth.user }
-    user.validated = true;
-    await this.$auth.setUser(user)
+  isVerified(): boolean {
+    return this.isAuthenticated() && this.user().verified
   }
 
   clear() {
-    this.store.dispatch("session/clear");
+    this.store.dispatch('session/clear')
   }
 }
 

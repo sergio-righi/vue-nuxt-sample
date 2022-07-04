@@ -28,7 +28,7 @@ const mutations: MutationTree<RootState> = {
 const getters: GetterTree<RootState, RootState> = {
   logged: (state: IState) => state.auth.user,
   feedback: (state: IState) => state.feedback,
-  isAuthenticated: (state: IState) => state.auth.loggedIn,
+  isAuthenticated: (state: IState) => false,//state.auth.loggedIn,
 };
 
 const actions: ActionTree<RootState, RootState> = {

@@ -1,33 +1,32 @@
+import { Context } from '@nuxt/types'
 
 const controller = {
   home: '/',
   users: '/users/',
-  session: {
-    login: 'sign_in',
-    subscribe: 'sign_up',
-    password: 'forget_password',
-    authorization: 'authorization'
-  }
 }
 
-const Resolve = (localePath: Function) => ({
-
-  home: () => localePath({ path: controller.home }),
+const Resolve = (context: any) => ({
+  home: () => context.localePath({ path: controller.home }),
 
   // users module
 
-  user: (...args: any[]) => localePath({ path: controller.users + 'do/' + args.join('/') }),
-  users: (...args: any[]) => localePath({ path: controller.users + args.join('/') }),
+  user: (...args: any[]) =>
+    context.localePath({ path: controller.users + 'do/' + args.join('/') }),
+  users: (...args: any[]) =>
+    context.localePath({ path: controller.users + args.join('/') }),
 
   // authentication
 
-  login: (...args: any[]) => localePath({ path: controller.session.login + args.join('/') }),
-  subscribe: (...args: any[]) => localePath({ path: controller.session.subscribe + args.join('/') }),
-  password: (...args: any[]) => localePath({ path: controller.session.password + args.join('/') }),
-  authorization: (...args: any[]) => localePath({ path: controller.session.authorization + args.join('/') })
+  login: (callback: string) => context.$config.sso + '?callback=' + callback,
+  logout: (callback: string) => context.$config.sso + '/logout?callback=' + callback,
+  subscribe: (callback: string) =>
+    context.$config.sso + '/register?callback=' + callback,
+  password: (callback: string) =>
+    context.$config.sso + '/forget-password?callback=' + callback,
+  authorization: (callback: string) =>
+    context.$config.sso + '/authorization?callback=' + callback,
+})
 
-});
-
-export const initializeResolve = (localePath: Function) => ({
-  ...Resolve(localePath)
-});
+export const initializeResolve = (context: Context) => ({
+  ...Resolve(context),
+})

@@ -56,7 +56,7 @@
 
 <script>
 import { mapState } from 'vuex'
-import { enums, helpers } from 'utils'
+import { enums, helpers } from '@/utils'
 import { Page } from '@/components'
 import {
   Email,
