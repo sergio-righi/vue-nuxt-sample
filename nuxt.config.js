@@ -65,7 +65,7 @@ export default {
   axios: {
     // proxy: true,
     progress: false,
-    baseUrl: process.env.BASE_URL,
+    baseUrl: process.env.AXIOS_URL,
   },
 
   i18n: {
