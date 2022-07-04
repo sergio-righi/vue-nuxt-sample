@@ -44,7 +44,7 @@ class App {
     this.express.use(
       cors({
         credentials: true,
-        origin: '*', // env.get('cors')
+        origin: env.get('cors')
       })
     )
     this.express.use(compression())
